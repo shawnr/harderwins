@@ -9,8 +9,10 @@
       <p class="featured-album__desc">{{featured_description}}</p>
       <p class="featured-album__meta">{{featured_releaseDate}}</p>
       <div class="featured-album__tags">{{featured_tags_html}}</div>
+      <div class="inline-player">
+        <iframe style="border: 0; width: 100%; max-width: 350px; height: 120px;" src="https://bandcamp.com/EmbeddedPlayer/album={{featured_bandcampAlbumId}}/size=large/bgcol=333333/linkcol=e32c14/tracklist=false/artwork=none/transparent=true/" seamless><a href="{{featured_bandcampUrl}}">{{featured_title}} by Harder Wins</a></iframe>
+      </div>
       <div class="featured-album__actions">
-        <button class="btn btn--play" data-play-album="{{featured_id}}">&#9654; Listen</button>
         <a class="btn" href="{{featured_bandcampUrl}}" target="_blank" rel="noopener">Bandcamp</a>
         <a class="btn" href="/{{featured_slug}}/">Details</a>
       </div>

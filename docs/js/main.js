@@ -9,88 +9,6 @@
   var ALBUMS = window.__ALBUMS__ || [];
 
   /* -----------------------------------------------------------------------
-     FOOTER PLAYER — just embed + close
-     ----------------------------------------------------------------------- */
-  var FooterPlayer = {
-    el: null,
-    embedEl: null,
-    expanded: false,
-    currentAlbumId: null,
-
-    init: function () {
-      this.el = document.getElementById('footer-player');
-      this.embedEl = document.getElementById('footer-player-embed');
-      if (!this.el) return;
-
-      var closeBtn = document.getElementById('footer-player-close');
-      if (closeBtn) closeBtn.addEventListener('click', this.close.bind(this));
-
-      var toggleBtn = document.getElementById('footer-player-toggle');
-      if (toggleBtn) toggleBtn.addEventListener('click', this.toggle.bind(this));
-
-      document.addEventListener('click', function (e) {
-        var playBtn = e.target.closest('[data-play-album]');
-        if (playBtn) {
-          e.preventDefault();
-          e.stopPropagation();
-          this.load(playBtn.getAttribute('data-play-album'));
-        }
-      }.bind(this));
-    },
-
-    load: function (albumId) {
-      var album = ALBUMS.find(function (a) { return a.id === albumId; });
-      if (!album) return;
-
-      // If same album, just expand
-      if (albumId === this.currentAlbumId && this.el.classList.contains('is-active')) {
-        if (!this.expanded) this.toggle();
-        return;
-      }
-
-      this.currentAlbumId = albumId;
-
-      if (this.embedEl) {
-        // Use large embed with tracklist — Bandcamp provides its own prev/next controls
-        var url = 'https://bandcamp.com/EmbeddedPlayer/album=' + album.bandcampAlbumId +
-          '/size=large/bgcol=050505/linkcol=e32636/tracklist=true/transparent=true/';
-        this.embedEl.innerHTML = '<iframe src="' + url + '" seamless title="' + esc(album.title) + '"></iframe>';
-      }
-
-      this.el.classList.add('is-active');
-      this.el.classList.add('is-expanded');
-      this.expanded = true;
-      document.body.classList.add('has-player');
-      this.updateToggleBtn();
-    },
-
-    toggle: function () {
-      if (!this.el) return;
-      this.expanded = !this.expanded;
-      this.el.classList.toggle('is-expanded', this.expanded);
-      this.updateToggleBtn();
-    },
-
-    updateToggleBtn: function () {
-      var btn = document.getElementById('footer-player-toggle');
-      if (btn) {
-        btn.innerHTML = this.expanded ? '&#9660;' : '&#9650;';
-        btn.setAttribute('aria-label', this.expanded ? 'Collapse player' : 'Expand player');
-      }
-    },
-
-    close: function () {
-      if (!this.el) return;
-      this.el.classList.remove('is-active');
-      this.el.classList.remove('is-expanded');
-      this.expanded = false;
-      this.currentAlbumId = null;
-      document.body.classList.remove('has-player');
-      if (this.embedEl) this.embedEl.innerHTML = '';
-    }
-  };
-
-  /* -----------------------------------------------------------------------
      FEATURED ALBUM SWAP
      ----------------------------------------------------------------------- */
   var AlbumSwap = {
@@ -106,7 +24,6 @@
       this.currentFeaturedId = this.featuredEl.getAttribute('data-album-id');
 
       this.gridEl.addEventListener('click', function (e) {
-        if (e.target.closest('[data-play-album]')) return;
         if (e.target.closest('.album-card__permalink')) return;
         var card = e.target.closest('.album-card');
         if (card) {
@@ -160,8 +77,10 @@
             '<p class="featured-album__desc">' + esc(album.description) + '</p>' +
             '<p class="featured-album__meta">' + esc(album.releaseDate) + '</p>' +
             '<div class="featured-album__tags">' + tags + '</div>' +
+            '<div class="inline-player">' +
+              '<iframe style="border: 0; width: 100%; max-width: 350px; height: 120px;" src="https://bandcamp.com/EmbeddedPlayer/album=' + album.bandcampAlbumId + '/size=large/bgcol=333333/linkcol=e32c14/tracklist=false/artwork=none/transparent=true/" seamless><a href="' + album.bandcampUrl + '">' + esc(album.title) + ' by Harder Wins</a></iframe>' +
+            '</div>' +
             '<div class="featured-album__actions">' +
-              '<button class="btn btn--play" data-play-album="' + album.id + '">&#9654; Listen</button>' +
               '<a class="btn" href="' + album.bandcampUrl + '" target="_blank" rel="noopener">Bandcamp</a>' +
               '<a class="btn" href="/' + album.slug + '/">Details</a>' +
             '</div>' +
@@ -176,9 +95,7 @@
           '<div class="album-card fade-in-up is-visible" data-album-id="' + album.id + '">' +
             '<div class="album-card__image">' +
               '<img src="/images/album-covers/' + album.coverImage + '" alt="' + esc(album.title) + '" loading="lazy">' +
-              '<div class="album-card__overlay">' +
-                '<button class="btn btn--play btn--sm" data-play-album="' + album.id + '">&#9654; Play</button>' +
-              '</div>' +
+              '<div class="album-card__overlay"></div>' +
             '</div>' +
             '<a class="album-card__permalink" href="/' + album.slug + '/" title="Permalink">#</a>' +
             '<div class="album-card__body">' +
@@ -225,7 +142,6 @@
       if (document.getElementById('featured-album')) return;
 
       document.addEventListener('click', function (e) {
-        if (e.target.closest('[data-play-album]')) return;
         if (e.target.closest('.album-card__permalink')) return;
         var card = e.target.closest('.album-card');
         if (card) {
@@ -469,7 +385,6 @@
   };
 
   document.addEventListener('DOMContentLoaded', function () {
-    FooterPlayer.init();
     AlbumSwap.init();
     CardNav.init();
     ScrollAnimate.init();

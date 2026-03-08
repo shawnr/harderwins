@@ -13,8 +13,10 @@
         <p class="album-page__credits">{{album_credits}}</p>
         <p class="album-page__meta">Released {{album_releaseDate}}</p>
         <div class="featured-album__tags">{{album_tags_html}}</div>
+        <div class="inline-player inline-player--tracklist">
+          <iframe style="border: 0; width: 100%; max-width: 350px; height: 472px;" src="https://bandcamp.com/EmbeddedPlayer/album={{album_bandcampAlbumId}}/size=large/bgcol=333333/linkcol=e32c14/artwork=none/transparent=true/" seamless><a href="{{album_bandcampUrl}}">{{album_title}} by Harder Wins</a></iframe>
+        </div>
         <div class="album-page__actions">
-          <button class="btn btn--play" data-play-album="{{album_id}}">&#9654; Listen</button>
           <a class="btn" href="{{album_bandcampUrl}}" target="_blank" rel="noopener">Open on Bandcamp</a>
         </div>
       </div>

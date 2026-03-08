@@ -56,9 +56,7 @@ function buildCard(album, addFadeClass) {
     '<div class="' + cls + '" data-album-id="' + album.id + '">' +
       '<div class="album-card__image">' +
         '<img src="/images/album-covers/' + album.coverImage + '" alt="' + escapeHtml(album.title) + '" loading="lazy">' +
-        '<div class="album-card__overlay">' +
-          '<button class="btn btn--play btn--sm" data-play-album="' + album.id + '">&#9654; Play</button>' +
-        '</div>' +
+        '<div class="album-card__overlay"></div>' +
       '</div>' +
       '<a class="album-card__permalink" href="/' + album.slug + '/" title="Permalink">#</a>' +
       '<div class="album-card__body">' +
