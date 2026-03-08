@@ -141,6 +141,13 @@ if (fs.existsSync(ASSETS_LOGOS)) {
   });
 }
 
+// Favicon
+var faviconSrc = path.join(SRC, 'images', 'favicon.ico');
+if (fs.existsSync(faviconSrc)) {
+  fs.copyFileSync(faviconSrc, path.join(DOCS, 'favicon.ico'));
+  console.log('  Copied: favicon.ico');
+}
+
 // CNAME
 var cnamePath = path.join(DOCS, 'CNAME');
 if (!fs.existsSync(cnamePath)) {
