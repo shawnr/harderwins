@@ -5,7 +5,7 @@
   <div class="content-box">
     <div class="album-page__hero">
       <div class="album-page__cover">
-        <img src="/images/album-covers/{{album_coverImage}}" alt="{{album_title}}">
+        <iframe style="border: 0; width: 100%; max-width: 350px; height: 786px;" src="https://bandcamp.com/EmbeddedPlayer/album={{album_bandcampAlbumId}}/size=large/bgcol=333333/linkcol=e32c14/transparent=true/" seamless><a href="{{album_bandcampUrl}}">{{album_title}} by Harder Wins</a></iframe>
       </div>
       <div class="album-page__details">
         <h2 class="album-page__title">{{album_title}}</h2>
@@ -13,9 +13,6 @@
         <p class="album-page__credits">{{album_credits}}</p>
         <p class="album-page__meta">Released {{album_releaseDate}}</p>
         <div class="featured-album__tags">{{album_tags_html}}</div>
-        <div class="inline-player inline-player--tracklist">
-          <iframe style="border: 0; width: 100%; max-width: 350px; height: 472px;" src="https://bandcamp.com/EmbeddedPlayer/album={{album_bandcampAlbumId}}/size=large/bgcol=333333/linkcol=e32c14/artwork=none/transparent=true/" seamless><a href="{{album_bandcampUrl}}">{{album_title}} by Harder Wins</a></iframe>
-        </div>
         <div class="album-page__actions">
           <a class="btn" href="{{album_bandcampUrl}}" target="_blank" rel="noopener">Open on Bandcamp</a>
         </div>

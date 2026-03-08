@@ -168,19 +168,31 @@ a:hover { color: var(--cyan); }
   filter: drop-shadow(0 0 8px var(--red-glow)) drop-shadow(0 0 25px rgba(227,38,54,0.15));
 }
 
-/* Red channel clone — tint red, displace */
+/* Red channel clone — exact red via mask, matches title glitch ::before */
 .logo-glitch-wrap .logo-img--r {
   z-index: 2;
-  opacity: 0.9;
-  filter: sepia(1) hue-rotate(-55deg) saturate(8) brightness(1.1);
+  opacity: 0.8;
+  background: var(--red);
+  -webkit-mask-image: url(/images/pawnking-piece-trans.png);
+  -webkit-mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-image: url(/images/pawnking-piece-trans.png);
+  mask-size: contain;
+  mask-repeat: no-repeat;
   animation: logo-glitch-r 3.5s infinite steps(1);
 }
 
-/* Dark channel clone — near-black, displace */
+/* Dark channel clone — near-black via mask, matches title glitch ::after */
 .logo-glitch-wrap .logo-img--g {
   z-index: 1;
   opacity: 0.85;
-  filter: brightness(0.15);
+  background: #111111;
+  -webkit-mask-image: url(/images/pawnking-piece-trans.png);
+  -webkit-mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-image: url(/images/pawnking-piece-trans.png);
+  mask-size: contain;
+  mask-repeat: no-repeat;
   animation: logo-glitch-g 3.5s infinite steps(1);
 }
 
@@ -766,13 +778,14 @@ a:hover { color: var(--cyan); }
 
 .album-page__hero {
   display: grid;
-  grid-template-columns: 320px 1fr;
+  grid-template-columns: 350px 1fr;
   gap: 2rem;
   align-items: start;
   margin-bottom: 2rem;
 }
 
 .album-page__cover img { width: 100%; height: auto; display: block; border: 1px solid var(--bg-surface); }
+.album-page__cover iframe { display: block; }
 
 .album-page__details { display: flex; flex-direction: column; gap: 0.75rem; }
 .album-page__title { font-family: var(--title); font-size: 1.6rem; letter-spacing: 0.06em; }
@@ -828,7 +841,7 @@ a:hover { color: var(--cyan); }
   .featured-album__cover { padding: 1.25rem 1.25rem 0; max-width: 260px; }
   .featured-album__info { padding: 1.25rem; }
   .album-page__hero { grid-template-columns: 1fr; }
-  .album-page__cover { max-width: 280px; }
+  .album-page__cover { max-width: 350px; }
   .album-grid { grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 0.75rem; }
   .logo-glitch-wrap { width: 80px; height: 80px; }
 }
