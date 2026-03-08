@@ -1,0 +1,889 @@
+/* ==========================================================================
+   HARDER WINS — style.css
+   Gritty hacker × dub soundsystem × digital resistance
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap');
+
+:root {
+  --bg: #050505;
+  --bg-raised: #0c0c0c;
+  --bg-surface: #141414;
+  --text: #e8e8e8;
+  --text-dim: #cccccc;
+  --text-faint: #888888;
+  --red: #e32636;
+  --red-dim: rgba(227, 38, 54, 0.25);
+  --red-glow: rgba(227, 38, 54, 0.5);
+  --red-deep: #8b1525;
+  --cyan: #00e5ff;
+  --cyan-dim: rgba(0, 229, 255, 0.2);
+  --gold: #d4af37;
+  --gold-dim: rgba(212, 175, 55, 0.25);
+  --green: #3a7d2c;
+
+  --title: 'Orbitron', 'Courier New', sans-serif;
+  --mono: 'Share Tech Mono', 'Courier New', 'Lucida Console', monospace;
+  --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --speed: 180ms;
+  --max-w: 1100px;
+}
+
+/* --- Reset --- */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  background: var(--bg);
+  color: var(--text);
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--sans);
+  background: transparent;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+body.has-player { padding-bottom: 50px; }
+
+/* ==========================================================================
+   BACKGROUND TEXTURE
+   Glitchy corrupted pixel blocks + scanlines — VISIBLE opacity
+   ========================================================================== */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    /* Scanlines on top */
+    repeating-linear-gradient(
+      0deg,
+      transparent 0px, transparent 2px,
+      rgba(255,255,255,0.03) 2px, rgba(255,255,255,0.03) 3px
+    ),
+    /* Actual glitch texture image */
+    url('/images/page-background.jpg');
+  background-size: auto, cover;
+  background-position: center, center;
+  opacity: 0.3;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* CRT vignette — lighter so it doesn't crush everything */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(ellipse at center, transparent 60%, rgba(0,0,0,0.3) 100%);
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* --- Typography --- */
+h1, h2, h3, h4 {
+  font-family: var(--mono);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+}
+
+a { color: var(--red); text-decoration: none; transition: color var(--speed) var(--ease); }
+a:hover { color: var(--cyan); }
+
+::selection { background: var(--red); color: var(--bg); }
+
+/* ==========================================================================
+   HEADER
+   ========================================================================== */
+.site-header {
+  position: relative;
+  padding: 3rem 1.25rem 1.5rem;
+  text-align: center;
+  overflow: hidden;
+}
+
+.site-header::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(rgba(227,38,54,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(227,38,54,0.04) 1px, transparent 1px);
+  background-size: 50px 50px;
+  pointer-events: none;
+}
+
+.site-header__inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  position: relative;
+}
+
+.header-link {
+  text-decoration: none;
+  color: inherit;
+  display: inline-block;
+}
+
+/* Brand lockup — logo + title side by side, baselines aligned */
+.header-brand {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 0.75rem;
+  justify-content: center;
+}
+
+/* ==========================================================================
+   LOGO GLITCH — transparent PNG with CSS color clones
+   Same clip-path displacement technique as the text glitch
+   ========================================================================== */
+.logo-glitch-wrap {
+  display: inline-block;
+  position: relative;
+  width: 110px;
+  height: 110px;
+  margin-bottom: 0;
+  flex-shrink: 0;
+}
+
+.logo-glitch-wrap .logo-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* Main image — pawn with red glow on the white outline */
+.logo-glitch-wrap .logo-img--main {
+  z-index: 3;
+  filter: drop-shadow(0 0 8px var(--red-glow)) drop-shadow(0 0 25px rgba(227,38,54,0.15));
+}
+
+/* Red channel clone — tint the white parts red, displace */
+.logo-glitch-wrap .logo-img--r {
+  z-index: 2;
+  opacity: 0.9;
+  filter: sepia(1) hue-rotate(-30deg) saturate(6) brightness(1.2);
+  animation: logo-glitch-r 3.5s infinite steps(1);
+}
+
+/* Cyan channel clone — tint the white parts cyan, displace */
+.logo-glitch-wrap .logo-img--g {
+  z-index: 1;
+  opacity: 0.8;
+  filter: sepia(1) hue-rotate(140deg) saturate(6) brightness(1.3);
+  animation: logo-glitch-g 3.5s infinite steps(1);
+}
+
+@keyframes logo-glitch-r {
+  0%   { transform: translate(0, 0); clip-path: inset(0 0 100% 0); }
+  5%   { transform: translate(-6px, 2px); clip-path: inset(10% 0 60% 0); }
+  10%  { transform: translate(8px, -1px); clip-path: inset(45% 0 20% 0); }
+  15%  { transform: translate(-4px, 3px); clip-path: inset(70% 0 5% 0); }
+  18%  { transform: translate(0, 0); clip-path: inset(0 0 100% 0); }
+  38%  { transform: translate(0, 0); clip-path: inset(0 0 100% 0); }
+  40%  { transform: translate(10px, -1px); clip-path: inset(25% 0 40% 0); }
+  42%  { transform: translate(-7px, 2px); clip-path: inset(55% 0 15% 0); }
+  44%  { transform: translate(5px, 0); clip-path: inset(5% 0 80% 0); }
+  46%  { transform: translate(0, 0); clip-path: inset(0 0 100% 0); }
+  72%  { transform: translate(0, 0); clip-path: inset(0 0 100% 0); }
+  74%  { transform: translate(-8px, 1px); clip-path: inset(35% 0 30% 0); }
+  76%  { transform: translate(6px, -3px); clip-path: inset(65% 0 10% 0); }
+  78%  { transform: translate(0, 0); clip-path: inset(0 0 100% 0); }
+  100% { transform: translate(0, 0); clip-path: inset(0 0 100% 0); }
+}
+
+@keyframes logo-glitch-g {
+  0%   { transform: translate(0, 0); clip-path: inset(100% 0 0 0); }
+  6%   { transform: translate(7px, -2px); clip-path: inset(50% 0 15% 0); }
+  11%  { transform: translate(-5px, 1px); clip-path: inset(20% 0 45% 0); }
+  16%  { transform: translate(3px, -2px); clip-path: inset(75% 0 0% 0); }
+  19%  { transform: translate(0, 0); clip-path: inset(100% 0 0 0); }
+  39%  { transform: translate(0, 0); clip-path: inset(100% 0 0 0); }
+  41%  { transform: translate(-9px, 1px); clip-path: inset(40% 0 25% 0); }
+  43%  { transform: translate(6px, -2px); clip-path: inset(70% 0 5% 0); }
+  45%  { transform: translate(-4px, 0); clip-path: inset(10% 0 75% 0); }
+  47%  { transform: translate(0, 0); clip-path: inset(100% 0 0 0); }
+  73%  { transform: translate(0, 0); clip-path: inset(100% 0 0 0); }
+  75%  { transform: translate(5px, -1px); clip-path: inset(30% 0 40% 0); }
+  77%  { transform: translate(-3px, 2px); clip-path: inset(60% 0 15% 0); }
+  79%  { transform: translate(0, 0); clip-path: inset(100% 0 0 0); }
+  100% { transform: translate(0, 0); clip-path: inset(100% 0 0 0); }
+}
+
+/* ==========================================================================
+   TITLE GLITCH — futuristic Orbitron font
+   Horizontal slice displacement with RGB color separation
+   ========================================================================== */
+.site-title {
+  font-family: var(--title);
+  font-size: clamp(2.2rem, 7vw, 4rem);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin: 0;
+  position: relative;
+  display: inline-block;
+  color: var(--text);
+}
+
+.glitch {
+  position: relative;
+  display: inline-block;
+  animation: title-flicker 5s infinite;
+}
+
+.glitch::before,
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+}
+
+.glitch::before {
+  color: var(--red);
+  animation: txt-glitch-r 3.5s infinite steps(1);
+  opacity: 0.8;
+}
+
+.glitch::after {
+  color: #111111;
+  animation: txt-glitch-c 3.5s infinite steps(1);
+  opacity: 0.85;
+}
+
+@keyframes txt-glitch-r {
+  0%   { transform: translate(0); clip-path: inset(0 0 100% 0); }
+  5%   { transform: translate(-5px, 2px); clip-path: inset(10% 0 60% 0); }
+  10%  { transform: translate(4px, -1px); clip-path: inset(45% 0 20% 0); }
+  15%  { transform: translate(0); clip-path: inset(0 0 100% 0); }
+  38%  { transform: translate(0); clip-path: inset(0 0 100% 0); }
+  40%  { transform: translate(-8px, 0); clip-path: inset(55% 0 15% 0); }
+  42%  { transform: translate(6px, 2px); clip-path: inset(5% 0 80% 0); }
+  44%  { transform: translate(-3px, -1px); clip-path: inset(70% 0 5% 0); }
+  46%  { transform: translate(0); clip-path: inset(0 0 100% 0); }
+  72%  { transform: translate(0); clip-path: inset(0 0 100% 0); }
+  74%  { transform: translate(7px, 1px); clip-path: inset(25% 0 45% 0); }
+  76%  { transform: translate(-4px, -2px); clip-path: inset(65% 0 10% 0); }
+  78%  { transform: translate(0); clip-path: inset(0 0 100% 0); }
+  100% { transform: translate(0); clip-path: inset(0 0 100% 0); }
+}
+
+@keyframes txt-glitch-c {
+  0%   { transform: translate(0); clip-path: inset(100% 0 0 0); }
+  6%   { transform: translate(6px, -2px); clip-path: inset(50% 0 15% 0); }
+  11%  { transform: translate(-5px, 1px); clip-path: inset(20% 0 45% 0); }
+  16%  { transform: translate(0); clip-path: inset(100% 0 0 0); }
+  39%  { transform: translate(0); clip-path: inset(100% 0 0 0); }
+  41%  { transform: translate(7px, 1px); clip-path: inset(40% 0 30% 0); }
+  43%  { transform: translate(-5px, -1px); clip-path: inset(75% 0 0% 0); }
+  45%  { transform: translate(4px, 2px); clip-path: inset(15% 0 70% 0); }
+  47%  { transform: translate(0); clip-path: inset(100% 0 0 0); }
+  73%  { transform: translate(0); clip-path: inset(100% 0 0 0); }
+  75%  { transform: translate(-6px, -1px); clip-path: inset(35% 0 35% 0); }
+  77%  { transform: translate(3px, 2px); clip-path: inset(60% 0 15% 0); }
+  79%  { transform: translate(0); clip-path: inset(100% 0 0 0); }
+  100% { transform: translate(0); clip-path: inset(100% 0 0 0); }
+}
+
+@keyframes title-flicker {
+  0%, 100% { text-shadow: 0 0 10px var(--red-glow), 0 0 40px rgba(227,38,54,0.08); }
+  49% { text-shadow: 0 0 10px var(--red-glow), 0 0 40px rgba(227,38,54,0.08); }
+  50% { text-shadow: 0 0 20px var(--red-glow), 0 0 60px rgba(227,38,54,0.15), 0 0 4px var(--cyan-dim); }
+  51% { text-shadow: 0 0 10px var(--red-glow), 0 0 40px rgba(227,38,54,0.08); }
+  85% { text-shadow: 0 0 10px var(--red-glow), 0 0 40px rgba(227,38,54,0.08); }
+  86% { text-shadow: 0 0 25px var(--red-glow), 0 0 80px rgba(227,38,54,0.2); }
+  88% { text-shadow: 0 0 5px var(--red-glow), 0 0 20px rgba(227,38,54,0.05); }
+  90% { text-shadow: 0 0 10px var(--red-glow), 0 0 40px rgba(227,38,54,0.08); }
+}
+
+.site-tagline {
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  letter-spacing: 0.2em;
+  text-transform: lowercase;
+  margin-top: 0.5rem;
+  font-weight: 400;
+}
+
+/* ==========================================================================
+   GAME OF LIFE DISPLAY — dub soundsystem LED grid
+   Canvas-based Conway's Game of Life with red/gold/green alive cells
+   ========================================================================== */
+.life-display {
+  display: block;
+  width: 100%;
+  height: 100px;
+  border: none;
+  border-radius: 0;
+  filter: contrast(1.15) brightness(0.85);
+  position: relative;
+  z-index: 2;
+}
+
+/* Inset display panel — padding creates border zones, texture shows through */
+.life-display-wrap {
+  position: relative;
+  display: block;
+  margin-bottom: 1.5rem;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  box-shadow:
+    inset 0 6px 15px rgba(0,0,0,0.8),
+    inset 0 -6px 15px rgba(0,0,0,0.8);
+}
+
+/* Textured background at 0.3 — only visible in the 6px padding zones
+   because the canvas covers the middle */
+.life-display-wrap::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url('/images/page-background.jpg') center / cover;
+  opacity: 0.6;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Scanline overlay on the canvas area */
+.life-display-wrap::after {
+  content: '';
+  position: absolute;
+  top: 6px; left: 0; right: 0; bottom: 6px;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent 0px, transparent 1px,
+    rgba(0,0,0,0.12) 1px, rgba(0,0,0,0.12) 2px
+  );
+  pointer-events: none;
+  z-index: 3;
+}
+
+
+.header-rule {
+  border: none;
+  height: 6px;
+  background: url('/images/page-background.jpg') center center;
+  background-size: cover;
+  margin: 0;
+  opacity: 0.85;
+  position: relative;
+}
+
+.header-rule::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--red);
+  opacity: 0.35;
+  mix-blend-mode: color;
+}
+
+/* ==========================================================================
+   LAYOUT
+   ========================================================================== */
+.site-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.site-main {
+  flex: 1;
+  width: 100%;
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 2rem 1.25rem 4rem;
+}
+
+/* ==========================================================================
+   CONTENT BOX — shared container style with textured left border
+   ========================================================================== */
+.content-box,
+.featured-album {
+  background: rgba(8,8,8,0.95);
+  border: 1px solid var(--red-dim);
+  border-left: none;
+  margin-bottom: 3rem;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 30px rgba(0,0,0,0.5);
+}
+
+/* Textured left border — background image as repeating texture strip */
+.content-box::before,
+.featured-album::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; bottom: 0;
+  width: 8px;
+  background: url('/images/page-background.jpg') left center;
+  background-size: cover;
+  z-index: 5;
+  opacity: 0.85;
+}
+
+/* Subtle red tint overlay on the texture border */
+.content-box::after,
+.featured-album::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; bottom: 0;
+  width: 8px;
+  background: var(--red);
+  z-index: 6;
+  opacity: 0.35;
+  mix-blend-mode: color;
+}
+
+/* ==========================================================================
+   FEATURED ALBUM
+   ========================================================================== */
+.featured-album {
+  transition: opacity 0.3s var(--ease);
+}
+
+.featured-album__inner {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 0;
+}
+
+.featured-album__cover {
+  padding: 1.5rem;
+}
+
+.featured-album__cover img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border: 1px solid var(--bg-surface);
+  transition: all var(--speed) var(--ease);
+}
+
+.featured-album__cover img:hover {
+  border-color: var(--red);
+  box-shadow: 0 0 25px var(--red-dim);
+}
+
+.featured-album__info {
+  padding: 1.5rem 1.5rem 1.5rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.featured-album__title { font-family: var(--title); font-size: 1.4rem; color: var(--text); letter-spacing: 0.06em; }
+.featured-album__artists { font-family: var(--mono); font-size: 0.9rem; color: var(--red); }
+.featured-album__desc { color: var(--text-dim); font-size: 0.9rem; line-height: 1.7; max-width: 50ch; }
+.featured-album__meta { font-family: var(--mono); font-size: 0.75rem; color: var(--text-faint); }
+
+.featured-album__tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+
+.tag {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  color: var(--text-dim);
+  border: 1px solid rgba(227,38,54,0.3);
+  padding: 0.1rem 0.45rem;
+  letter-spacing: 0.04em;
+  text-transform: lowercase;
+  background: rgba(227,38,54,0.08);
+}
+
+.featured-album__actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-top: 0.75rem;
+}
+
+/* ==========================================================================
+   BUTTONS — blocky, glitch-inspired
+   ========================================================================== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--red);
+  background: rgba(227,38,54,0.1);
+  color: var(--red);
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all var(--speed) var(--ease);
+  text-decoration: none;
+  white-space: nowrap;
+  position: relative;
+}
+
+.btn::before {
+  content: '';
+  position: absolute;
+  top: -1px; left: -1px;
+  width: 4px; height: 4px;
+  background: var(--red);
+  opacity: 0;
+  transition: opacity var(--speed);
+}
+
+.btn::after {
+  content: '';
+  position: absolute;
+  bottom: -1px; right: -1px;
+  width: 4px; height: 4px;
+  background: var(--cyan);
+  opacity: 0;
+  transition: opacity var(--speed);
+}
+
+.btn:hover {
+  background: var(--red);
+  color: var(--bg);
+  box-shadow: 0 0 15px var(--red-dim), inset 0 0 10px rgba(0,0,0,0.3);
+  transform: translate(-1px, -1px);
+}
+
+.btn:hover::before,
+.btn:hover::after { opacity: 1; }
+
+.btn--play {
+  border-color: var(--gold);
+  color: var(--gold);
+  background: rgba(212,175,55,0.1);
+}
+
+.btn--play:hover {
+  background: var(--gold);
+  color: var(--bg);
+  box-shadow: 0 0 15px var(--gold-dim);
+}
+
+.btn--play::before { background: var(--gold); }
+
+.btn--sm { padding: 0.35rem 0.7rem; font-size: 0.65rem; }
+
+/* ==========================================================================
+   ALBUM GRID
+   ========================================================================== */
+.section-title {
+  font-family: var(--title);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--text-faint);
+  border-bottom: none;
+  padding-bottom: 0.75rem;
+  margin-bottom: 1.25rem;
+  position: relative;
+}
+
+.section-title::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 4px;
+  background: url('/images/page-background.jpg') center center;
+  background-size: cover;
+  opacity: 0.7;
+}
+
+.album-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1.25rem;
+  margin-bottom: 3rem;
+}
+
+.album-card {
+  background: rgba(8,8,8,0.95);
+  border: 1px solid rgba(255,255,255,0.06);
+  overflow: hidden;
+  transition: all var(--speed) var(--ease);
+  cursor: pointer;
+  position: relative;
+}
+
+.album-card:hover {
+  border-color: var(--red);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 25px rgba(0,0,0,0.6), 0 0 0 1px var(--red-dim);
+}
+
+.album-card__image {
+  position: relative;
+  aspect-ratio: 1;
+  overflow: hidden;
+}
+
+.album-card__image img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: all 0.3s var(--ease);
+}
+
+.album-card:hover .album-card__image img { transform: scale(1.03); }
+
+.album-card__overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(5,5,5,0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity var(--speed) var(--ease);
+}
+
+.album-card:hover .album-card__overlay { opacity: 1; }
+
+.album-card__body { padding: 0.75rem; }
+.album-card__title { font-family: var(--mono); font-size: 0.8rem; font-weight: 700; margin-bottom: 0.2rem; color: var(--text); line-height: 1.3; }
+.album-card__artists { font-size: 0.75rem; color: var(--red); }
+.album-card__year { font-family: var(--mono); font-size: 0.7rem; color: var(--text-faint); }
+
+.album-card__permalink {
+  position: absolute; top: 0.4rem; right: 0.4rem;
+  background: rgba(5,5,5,0.85); color: var(--text-faint);
+  width: 22px; height: 22px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.65rem; font-family: var(--mono);
+  opacity: 0; transition: opacity var(--speed); z-index: 2;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.album-card:hover .album-card__permalink { opacity: 1; }
+.album-card__permalink:hover { color: var(--red); border-color: var(--red); }
+
+/* ==========================================================================
+   STICKY FOOTER PLAYER — stripped down, just embed + close
+   ========================================================================== */
+.footer-player {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  background: var(--bg);
+  border-top: 2px solid var(--red);
+  z-index: 9000;
+  transform: translateY(100%);
+  transition: transform 0.3s var(--ease);
+}
+
+.footer-player.is-active { transform: translateY(0); }
+
+.footer-player__inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  padding: 0.35rem 0.75rem;
+  height: 48px;
+}
+
+.footer-player__embed {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.footer-player__embed iframe {
+  width: 100%;
+  height: 42px;
+  border: 0;
+}
+
+.footer-player__close {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  color: var(--text-faint);
+  width: 24px; height: 24px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  font-size: 0.85rem;
+  opacity: 0.4;
+  transition: all var(--speed) var(--ease);
+  margin-left: 0.5rem;
+}
+
+.footer-player__close:hover { opacity: 1; color: var(--red); }
+
+/* ==========================================================================
+   CONNECT — no header, equal treatment for all links
+   ========================================================================== */
+.connect-section {
+  margin: 3rem 0 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(227,38,54,0.15);
+}
+
+.connect-grid {
+  display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center;
+}
+
+.connect-link {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  padding: 0.35rem 0.75rem;
+  border: 1px solid rgba(255,255,255,0.1);
+  transition: all var(--speed) var(--ease);
+  letter-spacing: 0.05em;
+  background: rgba(255,255,255,0.03);
+}
+
+.connect-link:hover {
+  color: var(--red);
+  border-color: var(--red);
+  box-shadow: 0 0 10px var(--red-dim);
+  background: rgba(227,38,54,0.08);
+}
+
+/* No special primary style — all links equal */
+
+/* ==========================================================================
+   SITE FOOTER
+   ========================================================================== */
+.site-footer {
+  text-align: center;
+  padding: 2rem 1.25rem 1.5rem;
+  border-top: 1px solid rgba(255,255,255,0.05);
+  margin-top: auto;
+}
+
+.site-footer__text {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  color: var(--text-faint);
+  letter-spacing: 0.1em;
+}
+
+/* ==========================================================================
+   ALBUM DETAIL PAGE
+   ========================================================================== */
+.album-page { padding-top: 1rem; }
+
+.album-page .content-box {
+  padding: 1.5rem;
+}
+
+.album-page__back {
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-bottom: 1.5rem;
+  color: var(--text);
+  padding: 0.4rem 0.8rem;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.04);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  transition: all var(--speed) var(--ease);
+}
+.album-page__back:hover {
+  color: var(--red);
+  border-color: var(--red);
+  background: rgba(227,38,54,0.08);
+}
+
+.album-page__hero {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 2rem;
+  align-items: start;
+  margin-bottom: 2rem;
+}
+
+.album-page__cover img { width: 100%; height: auto; display: block; border: 1px solid var(--bg-surface); }
+
+.album-page__details { display: flex; flex-direction: column; gap: 0.75rem; }
+.album-page__title { font-family: var(--title); font-size: 1.6rem; letter-spacing: 0.06em; }
+.album-page__artists { font-family: var(--mono); color: var(--red); font-size: 0.95rem; }
+.album-page__desc { color: var(--text-dim); line-height: 1.8; max-width: 55ch; font-size: 0.9rem; }
+
+.album-page__credits {
+  font-family: var(--mono); font-size: 0.8rem;
+  color: var(--text-dim);
+  line-height: 1.6;
+  border-left: 2px solid var(--red-dim);
+  padding-left: 0.75rem;
+}
+
+.album-page__meta { font-family: var(--mono); font-size: 0.8rem; color: var(--text-faint); }
+.album-page__actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+
+.album-page__player { margin: 2rem 0; }
+.album-page__player iframe { border: 0; width: 100%; max-width: 700px; height: 470px; }
+
+.album-page__more { margin-top: 2rem; }
+
+/* ==========================================================================
+   WELCOME
+   ========================================================================== */
+.welcome-section {
+  margin: 2rem 0;
+  padding: 1.5rem 0;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+
+.welcome-section p {
+  color: var(--text-dim);
+  max-width: 55ch;
+  line-height: 1.8;
+  font-size: 0.9rem;
+}
+
+/* ==========================================================================
+   ANIMATIONS
+   ========================================================================== */
+.fade-in-up {
+  opacity: 0; transform: translateY(14px);
+  transition: opacity 0.4s var(--ease), transform 0.4s var(--ease);
+}
+.fade-in-up.is-visible { opacity: 1; transform: translateY(0); }
+
+/* ==========================================================================
+   RESPONSIVE
+   ========================================================================== */
+@media (max-width: 768px) {
+  .featured-album__inner { grid-template-columns: 1fr; }
+  .featured-album__cover { padding: 1.25rem 1.25rem 0; max-width: 260px; }
+  .featured-album__info { padding: 1.25rem; }
+  .album-page__hero { grid-template-columns: 1fr; }
+  .album-page__cover { max-width: 280px; }
+  .album-grid { grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 0.75rem; }
+  .logo-glitch-wrap { width: 80px; height: 80px; }
+}
+
+@media (max-width: 480px) {
+  .site-header { padding: 2rem 1rem 1.25rem; }
+  .site-main { padding: 1.5rem 1rem 4rem; }
+  .album-grid { grid-template-columns: 1fr 1fr; gap: 0.6rem; }
+  .album-card__body { padding: 0.5rem; }
+  .connect-link { font-size: 0.7rem; padding: 0.3rem 0.5rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

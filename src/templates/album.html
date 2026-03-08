@@ -1,0 +1,37 @@
+<!-- Album Page -->
+<div class="album-page">
+  <a class="album-page__back" href="/">&larr; All releases</a>
+
+  <div class="content-box">
+    <div class="album-page__hero">
+      <div class="album-page__cover">
+        <img src="/images/album-covers/{{album_coverImage}}" alt="{{album_title}}">
+      </div>
+      <div class="album-page__details">
+        <h2 class="album-page__title">{{album_title}}</h2>
+        <p class="album-page__artists">{{album_artists}}</p>
+        <p class="album-page__desc">{{album_longDescription}}</p>
+        <p class="album-page__credits">{{album_credits}}</p>
+        <p class="album-page__meta">Released {{album_releaseDate}}</p>
+        <div class="featured-album__tags">{{album_tags_html}}</div>
+        <div class="album-page__actions">
+          <button class="btn btn--play" data-play-album="{{album_id}}">&#9654; Listen</button>
+          <a class="btn" href="{{album_bandcampUrl}}" target="_blank" rel="noopener">Open on Bandcamp</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Game of Life LED display -->
+  <div class="life-display-wrap">
+    <canvas id="life-display" class="life-display" width="700" height="100" aria-hidden="true"></canvas>
+  </div>
+
+  <!-- More releases -->
+  <section class="album-page__more">
+    <h3 class="section-title">More releases</h3>
+    <div class="album-grid">
+      {{related_cards}}
+    </div>
+  </section>
+</div>

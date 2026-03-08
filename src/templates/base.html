@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="{{meta_description}}">
+  <meta property="og:title" content="{{page_title}}">
+  <meta property="og:description" content="{{meta_description}}">
+  <meta property="og:type" content="{{og_type}}">
+  <meta property="og:url" content="{{canonical_url}}">
+  <meta property="og:image" content="{{og_image}}">
+  <title>{{page_title}}</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="site-wrapper">
+
+    <header class="site-header">
+      <div class="site-header__inner">
+        <a href="/" class="header-link">
+          <div class="header-brand">
+            <div class="logo-glitch-wrap">
+              <img src="/images/pawnking-piece-trans.png" alt="" class="logo-img logo-img--main" width="110" height="110">
+              <img src="/images/pawnking-piece-trans.png" alt="" class="logo-img logo-img--r" aria-hidden="true">
+              <img src="/images/pawnking-piece-trans.png" alt="" class="logo-img logo-img--g" aria-hidden="true">
+            </div>
+            <h1 class="site-title">
+              <span class="glitch" data-text="Harder Wins">Harder Wins</span>
+            </h1>
+          </div>
+        </a>
+        <p class="site-tagline">{{site_tagline}}</p>
+      </div>
+    </header>
+    <hr class="header-rule">
+
+    <main class="site-main">
+      {{content}}
+
+      <section class="connect-section">
+        <nav class="connect-grid">
+          <a class="connect-link" href="{{link_bandcamp}}" target="_blank" rel="noopener">Bandcamp</a>
+          <a class="connect-link" href="{{link_spotify}}" target="_blank" rel="noopener">Spotify</a>
+          <a class="connect-link" href="{{link_appleMusic}}" target="_blank" rel="noopener">Apple Music</a>
+          <a class="connect-link" href="{{link_youtube}}" target="_blank" rel="noopener">YouTube</a>
+          <a class="connect-link" href="{{link_soundcloud}}" target="_blank" rel="noopener">SoundCloud</a>
+          <a class="connect-link" href="{{link_instagram}}" target="_blank" rel="noopener">Instagram</a>
+          <a class="connect-link" href="{{link_bluesky}}" target="_blank" rel="noopener">Bluesky</a>
+          <a class="connect-link" href="mailto:{{link_email}}">Email</a>
+        </nav>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p class="site-footer__text">&copy; {{year}} {{site_copyright}}</p>
+    </footer>
+
+    <!-- Sticky Footer Player — just embed + close -->
+    <div class="footer-player" id="footer-player">
+      <div class="footer-player__inner">
+        <div class="footer-player__embed" id="footer-player-embed"></div>
+        <button class="footer-player__close" id="footer-player-close" aria-label="Close player">&times;</button>
+      </div>
+    </div>
+
+  </div>
+
+  <script>window.__ALBUMS__ = {{albums_json}};</script>
+  <script src="/js/main.js"></script>
+</body>
+</html>

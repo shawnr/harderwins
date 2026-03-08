@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Music by Shawn Rider. Folk punk, synthpunk, dub, and more from Seattle.">
-  <meta property="og:title" content="Harder Wins">
-  <meta property="og:description" content="Music by Shawn Rider. Folk punk, synthpunk, dub, and more from Seattle.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://harderwins.com/">
-  <meta property="og:image" content="https://harderwins.com/images/album-covers/HTNN-album-cover.jpg">
-  <title>Harder Wins</title>
+  <meta name="description" content="Instrumental classics across many genres: hip hop, cyber jazz, lofi, chillstep, synthwave, dub, and more. Songs for getting things done.">
+  <meta property="og:title" content="Instrumental Classics vol. One — Harder Wins">
+  <meta property="og:description" content="Instrumental classics across many genres: hip hop, cyber jazz, lofi, chillstep, synthwave, dub, and more. Songs for getting things done.">
+  <meta property="og:type" content="music.album">
+  <meta property="og:url" content="https://harderwins.com/instrumental-classics-vol-one/">
+  <meta property="og:image" content="https://harderwins.com/images/album-covers/instrumental-classics-vol-1-cover.jpg">
+  <title>Instrumental Classics vol. One — Harder Wins</title>
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
@@ -35,47 +35,46 @@
     <hr class="header-rule">
 
     <main class="site-main">
-      <!-- Featured Album -->
-<section class="featured-album" id="featured-album" data-album-id="htnn">
-  <div class="featured-album__inner">
-    <div class="featured-album__cover">
-      <img src="/images/album-covers/HTNN-album-cover.jpg" alt="Halfway There, Nowhere Near">
-    </div>
-    <div class="featured-album__info">
-      <h2 class="featured-album__title">Halfway There, Nowhere Near</h2>
-      <p class="featured-album__artists">Harder Wins</p>
-      <p class="featured-album__desc">This album has been cooking for the past year and a half. After the release of Dubs for Weary Revolutionaries I began working on another synthpunk album. This album is mostly pretty fast and noisy, but it has some surprises, too.</p>
-      <p class="featured-album__meta">August 23, 2024</p>
-      <div class="featured-album__tags"><span class="tag">synthpunk</span><span class="tag">folk punk</span><span class="tag">reggae</span><span class="tag">Seattle</span></div>
-      <div class="featured-album__actions">
-        <button class="btn btn--play" data-play-album="htnn">&#9654; Listen</button>
-        <a class="btn" href="https://harderwins.bandcamp.com/album/halfway-there-nowhere-near" target="_blank" rel="noopener">Bandcamp</a>
-        <a class="btn" href="/halfway-there-nowhere-near/">Details</a>
+      <!-- Album Page -->
+<div class="album-page">
+  <a class="album-page__back" href="/">&larr; All releases</a>
+
+  <div class="content-box">
+    <div class="album-page__hero">
+      <div class="album-page__cover">
+        <img src="/images/album-covers/instrumental-classics-vol-1-cover.jpg" alt="Instrumental Classics vol. One">
+      </div>
+      <div class="album-page__details">
+        <h2 class="album-page__title">Instrumental Classics vol. One</h2>
+        <p class="album-page__artists">Harder Wins</p>
+        <p class="album-page__desc">Instrumental Classics across many genres: hip hop, cyber jazz, lofi, chillstep, synthwave, dub, and more! Songs for getting things done. Composed, performed, recorded, and engineered by Shawn Rider.</p>
+        <p class="album-page__credits">Composed, performed, recorded, and engineered by Shawn Rider.</p>
+        <p class="album-page__meta">Released June 26, 2022</p>
+        <div class="featured-album__tags"><span class="tag">hip hop</span><span class="tag">cyber jazz</span><span class="tag">lofi</span><span class="tag">synthwave</span><span class="tag">dub</span></div>
+        <div class="album-page__actions">
+          <button class="btn btn--play" data-play-album="instrumental-classics">&#9654; Listen</button>
+          <a class="btn" href="https://harderwins.bandcamp.com/album/instrumental-classics-vol-one" target="_blank" rel="noopener">Open on Bandcamp</a>
+        </div>
       </div>
     </div>
   </div>
-</section>
 
-<!-- Game of Life LED display -->
-<div class="life-display-wrap">
-  <canvas id="life-display" class="life-display" width="700" height="100" aria-hidden="true"></canvas>
-</div>
-
-<!-- All Releases Grid -->
-<section>
-  <h3 class="section-title">Releases</h3>
-  <div class="album-grid" id="album-grid">
-    <div class="album-card fade-in-up" data-album-id="hfas"><div class="album-card__image"><img src="/images/album-covers/hfas-lp-cover.jpg" alt="Hi! Friends Across the Sea!" loading="lazy"><div class="album-card__overlay"><button class="btn btn--play btn--sm" data-play-album="hfas">&#9654; Play</button></div></div><a class="album-card__permalink" href="/hi-friends-across-the-sea/" title="Permalink">#</a><div class="album-card__body"><div class="album-card__title">Hi! Friends Across the Sea!</div><div class="album-card__artists">The Burgers + Harder Wins</div><div class="album-card__year">2023</div></div></div>
-    <div class="album-card fade-in-up" data-album-id="dubs"><div class="album-card__image"><img src="/images/album-covers/dubs-for-weary-revs-lp-cover.jpeg" alt="Dubs for Weary Revolutionaries" loading="lazy"><div class="album-card__overlay"><button class="btn btn--play btn--sm" data-play-album="dubs">&#9654; Play</button></div></div><a class="album-card__permalink" href="/dubs-for-weary-revolutionaries/" title="Permalink">#</a><div class="album-card__body"><div class="album-card__title">Dubs for Weary Revolutionaries</div><div class="album-card__artists">Harder Wins</div><div class="album-card__year">2023</div></div></div>
-    <div class="album-card fade-in-up" data-album-id="lockdown-drill"><div class="album-card__image"><img src="/images/album-covers/lockdown-drill-album.jpg" alt="Lockdown Drill" loading="lazy"><div class="album-card__overlay"><button class="btn btn--play btn--sm" data-play-album="lockdown-drill">&#9654; Play</button></div></div><a class="album-card__permalink" href="/lockdown-drill/" title="Permalink">#</a><div class="album-card__body"><div class="album-card__title">Lockdown Drill</div><div class="album-card__artists">Harder Wins</div><div class="album-card__year">2022</div></div></div>
-    <div class="album-card fade-in-up" data-album-id="instrumental-classics"><div class="album-card__image"><img src="/images/album-covers/instrumental-classics-vol-1-cover.jpg" alt="Instrumental Classics vol. One" loading="lazy"><div class="album-card__overlay"><button class="btn btn--play btn--sm" data-play-album="instrumental-classics">&#9654; Play</button></div></div><a class="album-card__permalink" href="/instrumental-classics-vol-one/" title="Permalink">#</a><div class="album-card__body"><div class="album-card__title">Instrumental Classics vol. One</div><div class="album-card__artists">Harder Wins</div><div class="album-card__year">2022</div></div></div>
+  <!-- Game of Life LED display -->
+  <div class="life-display-wrap">
+    <canvas id="life-display" class="life-display" width="700" height="100" aria-hidden="true"></canvas>
   </div>
-</section>
 
-<!-- Welcome -->
-<section class="welcome-section">
-  <p>Harder Wins is a one-person music project by Shawn Rider, out of Seattle. Folk punk, synthpunk, dub, and whatever else comes out. Follow on <a href="https://harderwins.bandcamp.com/releases" target="_blank" rel="noopener">Bandcamp</a> for new releases, tapes, and other physical media.</p>
-</section>
+  <!-- More releases -->
+  <section class="album-page__more">
+    <h3 class="section-title">More releases</h3>
+    <div class="album-grid">
+      <div class="album-card" data-album-id="htnn"><div class="album-card__image"><img src="/images/album-covers/HTNN-album-cover.jpg" alt="Halfway There, Nowhere Near" loading="lazy"><div class="album-card__overlay"><button class="btn btn--play btn--sm" data-play-album="htnn">&#9654; Play</button></div></div><a class="album-card__permalink" href="/halfway-there-nowhere-near/" title="Permalink">#</a><div class="album-card__body"><div class="album-card__title">Halfway There, Nowhere Near</div><div class="album-card__artists">Harder Wins</div><div class="album-card__year">2024</div></div></div>
+<div class="album-card" data-album-id="hfas"><div class="album-card__image"><img src="/images/album-covers/hfas-lp-cover.jpg" alt="Hi! Friends Across the Sea!" loading="lazy"><div class="album-card__overlay"><button class="btn btn--play btn--sm" data-play-album="hfas">&#9654; Play</button></div></div><a class="album-card__permalink" href="/hi-friends-across-the-sea/" title="Permalink">#</a><div class="album-card__body"><div class="album-card__title">Hi! Friends Across the Sea!</div><div class="album-card__artists">The Burgers + Harder Wins</div><div class="album-card__year">2023</div></div></div>
+<div class="album-card" data-album-id="dubs"><div class="album-card__image"><img src="/images/album-covers/dubs-for-weary-revs-lp-cover.jpeg" alt="Dubs for Weary Revolutionaries" loading="lazy"><div class="album-card__overlay"><button class="btn btn--play btn--sm" data-play-album="dubs">&#9654; Play</button></div></div><a class="album-card__permalink" href="/dubs-for-weary-revolutionaries/" title="Permalink">#</a><div class="album-card__body"><div class="album-card__title">Dubs for Weary Revolutionaries</div><div class="album-card__artists">Harder Wins</div><div class="album-card__year">2023</div></div></div>
+<div class="album-card" data-album-id="lockdown-drill"><div class="album-card__image"><img src="/images/album-covers/lockdown-drill-album.jpg" alt="Lockdown Drill" loading="lazy"><div class="album-card__overlay"><button class="btn btn--play btn--sm" data-play-album="lockdown-drill">&#9654; Play</button></div></div><a class="album-card__permalink" href="/lockdown-drill/" title="Permalink">#</a><div class="album-card__body"><div class="album-card__title">Lockdown Drill</div><div class="album-card__artists">Harder Wins</div><div class="album-card__year">2022</div></div></div>
+    </div>
+  </section>
+</div>
 
 
       <section class="connect-section">

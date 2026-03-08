@@ -1,0 +1,38 @@
+<!-- Featured Album -->
+<section class="featured-album" id="featured-album" data-album-id="{{featured_id}}">
+  <div class="featured-album__inner">
+    <div class="featured-album__cover">
+      <img src="/images/album-covers/{{featured_coverImage}}" alt="{{featured_title}}">
+    </div>
+    <div class="featured-album__info">
+      <h2 class="featured-album__title">{{featured_title}}</h2>
+      <p class="featured-album__artists">{{featured_artists}}</p>
+      <p class="featured-album__desc">{{featured_description}}</p>
+      <p class="featured-album__meta">{{featured_releaseDate}}</p>
+      <div class="featured-album__tags">{{featured_tags_html}}</div>
+      <div class="featured-album__actions">
+        <button class="btn btn--play" data-play-album="{{featured_id}}">&#9654; Listen</button>
+        <a class="btn" href="{{featured_bandcampUrl}}" target="_blank" rel="noopener">Bandcamp</a>
+        <a class="btn" href="/{{featured_slug}}/">Details</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Game of Life LED display -->
+<div class="life-display-wrap">
+  <canvas id="life-display" class="life-display" width="700" height="100" aria-hidden="true"></canvas>
+</div>
+
+<!-- All Releases Grid -->
+<section>
+  <h3 class="section-title">Releases</h3>
+  <div class="album-grid" id="album-grid">
+    {{grid_cards}}
+  </div>
+</section>
+
+<!-- Welcome -->
+<section class="welcome-section">
+  <p>Harder Wins is a one-person music project by Shawn Rider, out of Seattle. Folk punk, synthpunk, dub, and whatever else comes out. Follow on <a href="{{link_bandcamp}}" target="_blank" rel="noopener">Bandcamp</a> for new releases, tapes, and other physical media.</p>
+</section>
