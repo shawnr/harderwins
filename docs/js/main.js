@@ -14,6 +14,8 @@
   var FooterPlayer = {
     el: null,
     embedEl: null,
+    expanded: false,
+    currentAlbumId: null,
 
     init: function () {
       this.el = document.getElementById('footer-player');
@@ -22,6 +24,9 @@
 
       var closeBtn = document.getElementById('footer-player-close');
       if (closeBtn) closeBtn.addEventListener('click', this.close.bind(this));
+
+      var toggleBtn = document.getElementById('footer-player-toggle');
+      if (toggleBtn) toggleBtn.addEventListener('click', this.toggle.bind(this));
 
       document.addEventListener('click', function (e) {
         var playBtn = e.target.closest('[data-play-album]');
@@ -37,19 +42,49 @@
       var album = ALBUMS.find(function (a) { return a.id === albumId; });
       if (!album) return;
 
+      // If same album, just expand
+      if (albumId === this.currentAlbumId && this.el.classList.contains('is-active')) {
+        if (!this.expanded) this.toggle();
+        return;
+      }
+
+      this.currentAlbumId = albumId;
+
       if (this.embedEl) {
+        // Use large embed with tracklist — Bandcamp provides its own prev/next controls
         var url = 'https://bandcamp.com/EmbeddedPlayer/album=' + album.bandcampAlbumId +
-          '/size=small/bgcol=050505/linkcol=e32636/transparent=true/';
+          '/size=large/bgcol=050505/linkcol=e32636/tracklist=true/transparent=true/';
         this.embedEl.innerHTML = '<iframe src="' + url + '" seamless title="' + esc(album.title) + '"></iframe>';
       }
 
       this.el.classList.add('is-active');
+      this.el.classList.add('is-expanded');
+      this.expanded = true;
       document.body.classList.add('has-player');
+      this.updateToggleBtn();
+    },
+
+    toggle: function () {
+      if (!this.el) return;
+      this.expanded = !this.expanded;
+      this.el.classList.toggle('is-expanded', this.expanded);
+      this.updateToggleBtn();
+    },
+
+    updateToggleBtn: function () {
+      var btn = document.getElementById('footer-player-toggle');
+      if (btn) {
+        btn.innerHTML = this.expanded ? '&#9660;' : '&#9650;';
+        btn.setAttribute('aria-label', this.expanded ? 'Collapse player' : 'Expand player');
+      }
     },
 
     close: function () {
       if (!this.el) return;
       this.el.classList.remove('is-active');
+      this.el.classList.remove('is-expanded');
+      this.expanded = false;
+      this.currentAlbumId = null;
       document.body.classList.remove('has-player');
       if (this.embedEl) this.embedEl.innerHTML = '';
     }
@@ -122,7 +157,6 @@
           '</div>' +
           '<div class="featured-album__info">' +
             '<h2 class="featured-album__title">' + esc(album.title) + '</h2>' +
-            '<p class="featured-album__artists">' + esc(album.artists) + '</p>' +
             '<p class="featured-album__desc">' + esc(album.description) + '</p>' +
             '<p class="featured-album__meta">' + esc(album.releaseDate) + '</p>' +
             '<div class="featured-album__tags">' + tags + '</div>' +
@@ -149,7 +183,6 @@
             '<a class="album-card__permalink" href="/' + album.slug + '/" title="Permalink">#</a>' +
             '<div class="album-card__body">' +
               '<div class="album-card__title">' + esc(album.title) + '</div>' +
-              '<div class="album-card__artists">' + esc(album.artists) + '</div>' +
               '<div class="album-card__year">' + album.year + '</div>' +
             '</div>' +
           '</div>'

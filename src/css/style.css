@@ -50,7 +50,7 @@ body {
   overflow-x: hidden;
 }
 
-body.has-player { padding-bottom: 50px; }
+/* body.has-player is defined in the footer-player section */
 
 /* ==========================================================================
    BACKGROUND TEXTURE
@@ -168,7 +168,7 @@ a:hover { color: var(--cyan); }
   filter: drop-shadow(0 0 8px var(--red-glow)) drop-shadow(0 0 25px rgba(227,38,54,0.15));
 }
 
-/* Red channel clone — tint the white parts red, displace */
+/* Red channel clone — tint red, displace */
 .logo-glitch-wrap .logo-img--r {
   z-index: 2;
   opacity: 0.9;
@@ -176,11 +176,11 @@ a:hover { color: var(--cyan); }
   animation: logo-glitch-r 3.5s infinite steps(1);
 }
 
-/* Cyan channel clone — tint the white parts cyan, displace */
+/* Dark channel clone — near-black, displace */
 .logo-glitch-wrap .logo-img--g {
   z-index: 1;
-  opacity: 0.8;
-  filter: sepia(1) hue-rotate(140deg) saturate(6) brightness(1.3);
+  opacity: 0.85;
+  filter: brightness(0.15);
   animation: logo-glitch-g 3.5s infinite steps(1);
 }
 
@@ -672,12 +672,12 @@ a:hover { color: var(--cyan); }
 .album-card__permalink:hover { color: var(--red); border-color: var(--red); }
 
 /* ==========================================================================
-   STICKY FOOTER PLAYER — stripped down, just embed + close
+   STICKY FOOTER PLAYER — expandable embed with tracklist
    ========================================================================== */
 .footer-player {
   position: fixed;
   bottom: 0; left: 0; right: 0;
-  background: var(--bg);
+  background: rgba(5,5,5,0.97);
   border-top: 2px solid var(--red);
   z-index: 9000;
   transform: translateY(100%);
@@ -690,39 +690,66 @@ a:hover { color: var(--cyan); }
   max-width: var(--max-w);
   margin: 0 auto;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 0;
-  padding: 0.35rem 0.75rem;
-  height: 48px;
+  padding: 0.5rem 0.75rem;
 }
 
 .footer-player__embed {
   flex: 1;
   min-width: 0;
   overflow: hidden;
+  transition: height 0.3s var(--ease);
+  height: 120px;
+}
+
+/* Collapsed state */
+.footer-player:not(.is-expanded) .footer-player__embed {
+  height: 120px;
+}
+
+/* Expanded state — show full tracklist */
+.footer-player.is-expanded .footer-player__embed {
+  height: 360px;
 }
 
 .footer-player__embed iframe {
   width: 100%;
-  height: 42px;
+  height: 100%;
   border: 0;
 }
 
-.footer-player__close {
+.footer-player__controls {
   flex-shrink: 0;
-  background: none;
-  border: none;
-  color: var(--text-faint);
-  width: 24px; height: 24px;
-  display: flex; align-items: center; justify-content: center;
-  cursor: pointer;
-  font-size: 0.85rem;
-  opacity: 0.4;
-  transition: all var(--speed) var(--ease);
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
   margin-left: 0.5rem;
+  padding-top: 0.25rem;
 }
 
-.footer-player__close:hover { opacity: 1; color: var(--red); }
+.footer-player__toggle,
+.footer-player__close {
+  background: none;
+  border: 1px solid rgba(255,255,255,0.08);
+  color: var(--text-faint);
+  width: 28px; height: 28px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  font-size: 0.75rem;
+  transition: all var(--speed) var(--ease);
+  font-family: var(--mono);
+}
+
+.footer-player__toggle:hover,
+.footer-player__close:hover {
+  color: var(--red);
+  border-color: var(--red);
+  background: rgba(227,38,54,0.08);
+}
+
+body.has-player { padding-bottom: 130px; }
+.footer-player.is-expanded ~ .site-wrapper { padding-bottom: 370px; }
 
 /* ==========================================================================
    CONNECT — no header, equal treatment for all links

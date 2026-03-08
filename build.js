@@ -63,7 +63,6 @@ function buildCard(album, addFadeClass) {
       '<a class="album-card__permalink" href="/' + album.slug + '/" title="Permalink">#</a>' +
       '<div class="album-card__body">' +
         '<div class="album-card__title">' + escapeHtml(album.title) + '</div>' +
-        '<div class="album-card__artists">' + escapeHtml(album.artists) + '</div>' +
         '<div class="album-card__year">' + album.year + '</div>' +
       '</div>' +
     '</div>'
